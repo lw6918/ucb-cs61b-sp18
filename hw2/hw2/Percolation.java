@@ -23,7 +23,8 @@ public class Percolation {
                 arr[i][j] = 0;
             }
         }
-        weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 3);
+        weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
+        wqWithoutBottomSite = new WeightedQuickUnionUF(N * N + 1);
     }
 
     private int xyTo1D(int r, int c) {
@@ -39,6 +40,7 @@ public class Percolation {
     private void unionOpenNeighbor(int row, int col, int newRow, int newCol) {
         if (!(indexOutOfBounds(newRow, newCol)) && isOpen(newRow, newCol)) {
             weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(newRow, newCol));
+            wqWithoutBottomSite.union(xyTo1D(row, col), xyTo1D(newRow, newCol));
         }
     }
     public void open(int row, int col) {
