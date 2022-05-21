@@ -3,10 +3,10 @@ import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 public class PercolationStats {
     Percolation p = null;
-    int[] data;
+    double[] data;
     public PercolationStats(int N, int T, PercolationFactory pf) {
         // perform T independent experiments on an N-by-N grid
-        data = new int[T];
+        data = new double[T];
         for (int t = 0; t < T; t++) {
             p = pf.make(N);
             while(!p.percolates()) {
@@ -14,7 +14,7 @@ public class PercolationStats {
                 int col = StdRandom.uniform(N);
                 p.open(row, col);
             }
-            data[t] = p.numberOfOpenSites();
+            data[t] = p.numberOfOpenSites() / (T * T);
         }
     }
     public double mean() {

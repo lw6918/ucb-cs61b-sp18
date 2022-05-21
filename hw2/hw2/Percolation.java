@@ -4,25 +4,25 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import org.junit.Test;
 
 public class Percolation {
-    int[][] arr;
-    WeightedQuickUnionUF weightedQuickUnionUF = null;
-    int virtualTopSite;
-    int virtualBottomSite;
-    int openSize = 0;
+    private int[][] arr;
+    private WeightedQuickUnionUF weightedQuickUnionUF = null;
+    private int virtualTopSite;
+    private int virtualBottomSite;
+    private int openSize = 0;
     public Percolation(int N) {
         // create N-by-N grid, with all sites initially blocked
-        arr = new int[N][N];
-        virtualTopSite = N * N;
-        virtualBottomSite = N * N + 1;
         if (N <= 0) {
             throw new IllegalArgumentException();
         }
+        arr = new int[N][N];
+        virtualTopSite = N * N;
+        virtualBottomSite = N * N + 1;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 arr[i][j] = 0;
             }
         }
-        weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 2);
+        weightedQuickUnionUF = new WeightedQuickUnionUF(N * N + 3);
     }
 
     private int xyTo1D(int r, int c) {
@@ -46,7 +46,7 @@ public class Percolation {
             openSize += 1;
             if (row == 0) {
                 weightedQuickUnionUF.union(virtualTopSite, xyTo1D(row, col));
-            } else if (row == arr[0].length - 1) {
+            } else if (row == arr[0].length - 1 && !(percolates())) {
                 weightedQuickUnionUF.union(virtualBottomSite, xyTo1D(row, col));
             }
             if (!(indexOutOfBounds(row - 1, col)) && isOpen(row - 1, col)) {
@@ -74,6 +74,7 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         // is the site (row, col) full?
         return weightedQuickUnionUF.connected(xyTo1D(row, col), virtualTopSite);
+
     }
     public int numberOfOpenSites() {
         // number of open sites
