@@ -6,6 +6,7 @@ import org.junit.Test;
 public class Percolation {
     private int[][] arr;
     private WeightedQuickUnionUF weightedQuickUnionUF = null;
+    private WeightedQuickUnionUF wqWithoutBottomSite = null;
     private int virtualTopSite;
     private int virtualBottomSite;
     private int openSize = 0;
@@ -35,7 +36,11 @@ public class Percolation {
         }
         return false;
     }
-
+    private void unionOpenNeighbor(int row, int col, int newRow, int newCol) {
+        if (!(indexOutOfBounds(newRow, newCol)) && isOpen(newRow, newCol)) {
+            weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(newRow, newCol));
+        }
+    }
     public void open(int row, int col) {
         // open the site (row, col) if it is not open already
         if (indexOutOfBounds(row, col)) {
@@ -46,27 +51,22 @@ public class Percolation {
             openSize += 1;
             if (row == 0) {
                 weightedQuickUnionUF.union(virtualTopSite, xyTo1D(row, col));
+                wqWithoutBottomSite.union(virtualTopSite, xyTo1D(row, col));
             }
-            if (row == arr[0].length - 1 && !(percolates())) {
+            if (row == arr[0].length - 1) {
                 weightedQuickUnionUF.union(virtualBottomSite, xyTo1D(row, col));
             }
-            if (!(indexOutOfBounds(row - 1, col)) && isOpen(row - 1, col)) {
-                weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(row - 1, col));
-            }
-            if (!(indexOutOfBounds(row + 1, col)) && isOpen(row + 1, col)) {
-                weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(row + 1, col));
-            }
-            if (!(indexOutOfBounds(row, col - 1)) && isOpen(row, col - 1)) {
-                weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(row, col - 1));
-            }
-            if (!(indexOutOfBounds(row, col + 1)) && isOpen(row, col + 1)) {
-                weightedQuickUnionUF.union(xyTo1D(row, col), xyTo1D(row, col + 1));
-            }
+            unionOpenNeighbor(row, col, row + 1, col);
+            unionOpenNeighbor(row, col, row - 1, col);
+            unionOpenNeighbor(row, col, row, col + 1);
+            unionOpenNeighbor(row, col, row, col - 1);
         }
-
     }
     public boolean isOpen(int row, int col) {
         // is the site (row, col) open?
+        if (indexOutOfBounds(row, col)) {
+            throw new IndexOutOfBoundsException();
+        }
         if(arr[row][col] == 1) {
             return true;
         }
@@ -74,7 +74,13 @@ public class Percolation {
     }
     public boolean isFull(int row, int col) {
         // is the site (row, col) full?
-        return weightedQuickUnionUF.connected(xyTo1D(row, col), virtualTopSite);
+        if (indexOutOfBounds(row, col)) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (!isOpen(row, col)) {
+            return false;
+        }
+        return wqWithoutBottomSite.connected(xyTo1D(row, col), virtualTopSite);
 
     }
     public int numberOfOpenSites() {
