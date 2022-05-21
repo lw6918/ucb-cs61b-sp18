@@ -46,7 +46,8 @@ public class Percolation {
             openSize += 1;
             if (row == 0) {
                 weightedQuickUnionUF.union(virtualTopSite, xyTo1D(row, col));
-            } else if (row == arr[0].length - 1 && !(percolates())) {
+            }
+            if (row == arr[0].length - 1 && !(percolates())) {
                 weightedQuickUnionUF.union(virtualBottomSite, xyTo1D(row, col));
             }
             if (!(indexOutOfBounds(row - 1, col)) && isOpen(row - 1, col)) {
