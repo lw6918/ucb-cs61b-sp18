@@ -2,8 +2,8 @@ package hw2;
 import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 public class PercolationStats {
-    Percolation p = null;
-    double[] data;
+    private Percolation p = null;
+    private double[] data;
     public PercolationStats(int N, int T, PercolationFactory pf) {
         // perform T independent experiments on an N-by-N grid
         data = new double[T];
@@ -14,7 +14,7 @@ public class PercolationStats {
                 int col = StdRandom.uniform(N);
                 p.open(row, col);
             }
-            data[t] = p.numberOfOpenSites() / (T * T);
+            data[t] = p.numberOfOpenSites() / (N * N);
         }
     }
     public double mean() {

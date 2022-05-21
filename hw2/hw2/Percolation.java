@@ -84,5 +84,7 @@ public class Percolation {
         // does the system percolate?
         return weightedQuickUnionUF.connected(virtualTopSite, virtualBottomSite);
     }
-//    public static void main(String[] args)   // use for unit testing (not required)
+    public static void main(String[] args){
+
+    }   // use for unit testing (not required)
 }
