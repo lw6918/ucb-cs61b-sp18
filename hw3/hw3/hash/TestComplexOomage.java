@@ -36,15 +36,35 @@ public class TestComplexOomage {
     /* TODO: Create a list of Complex Oomages called deadlyList
      * that shows the flaw in the hashCode function.
      */
-    /*
+
     @Test
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new ArrayList<>();
-
+        List<Integer> param1 = new ArrayList<>();
+        param1.add(255);
+        param1.add(255);
+        param1.add(255);
+        param1.add(255);
+        List<Integer> param2 = new ArrayList<>();
+        param2.add(254);
+        param2.add(254);
+        param2.add(254);
+        param2.add(254);
+        List<Integer> param3 = new ArrayList<>();
+        param3.add(253);
+        param3.add(253);
+        param3.add(253);
+        param3.add(253);
         // Your code here.
+        ComplexOomage ooA = new ComplexOomage(param1);
+        ComplexOomage ooA2 = new ComplexOomage(param2);
+        ComplexOomage ooA3 = new ComplexOomage(param3);
+        deadlyList.add(ooA);
+        deadlyList.add(ooA2);
+        deadlyList.add(ooA3);
 
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
-    } */
+    }
 
     /** Calls tests for SimpleOomage. */
     public static void main(String[] args) {
