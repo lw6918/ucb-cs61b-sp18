@@ -7,7 +7,6 @@ import java.util.List;
 public class OomageTestUtility {
     public static void put(Collection<Oomage>[] buckets, Oomage oomage, int bucketNum) {
         if (buckets[bucketNum] == null) {
-            buckets[bucketNum] = new LinkedList<>();
             buckets[bucketNum].add(oomage);
         } else {
             boolean findOomage = false;
@@ -30,12 +29,18 @@ public class OomageTestUtility {
          */
         int N = oomages.size();
         Collection<Oomage>[] buckets = new Collection[M];
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = new LinkedList<>();
+        }
+
         for (int i = 0; i < N; i++) {
             int bucketNum = (oomages.get(i).hashCode() & 0x7FFFFFFF) % M;
             put(buckets, oomages.get(i), bucketNum);
         }
         for (int i = 0; i < M; i++) {
-            if (buckets[i].size() < N / 50 || buckets[i].size() > N / 2.5) return false;
+            if (buckets[i].size() < N / 50 || buckets[i].size() > N / 2.5) {
+                return false;
+            }
         }
         return true;
     }

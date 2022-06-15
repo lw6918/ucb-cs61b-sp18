@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TestComplexOomage {
@@ -39,30 +40,16 @@ public class TestComplexOomage {
 
     @Test
     public void testWithDeadlyParams() {
-        List<Oomage> deadlyList = new ArrayList<>();
-        List<Integer> param1 = new ArrayList<>();
-        param1.add(255);
-        param1.add(255);
-        param1.add(255);
-        param1.add(255);
-        List<Integer> param2 = new ArrayList<>();
-        param2.add(254);
-        param2.add(254);
-        param2.add(254);
-        param2.add(254);
-        List<Integer> param3 = new ArrayList<>();
-        param3.add(253);
-        param3.add(253);
-        param3.add(253);
-        param3.add(253);
-        // Your code here.
-        ComplexOomage ooA = new ComplexOomage(param1);
-        ComplexOomage ooA2 = new ComplexOomage(param2);
-        ComplexOomage ooA3 = new ComplexOomage(param3);
-        deadlyList.add(ooA);
-        deadlyList.add(ooA2);
-        deadlyList.add(ooA3);
-
+        List<Oomage> deadlyList = new LinkedList<>();
+        LinkedList<Integer> param1 = new LinkedList<>();
+        for (int i = 0; i < 25; i++) {
+            LinkedList<Integer> tmp = new LinkedList<>();
+            tmp.add(i);
+            for (int j = 0; j < 5; j++) {
+                tmp.add(1);
+            }
+            deadlyList.add(new ComplexOomage(tmp));
+        }
         assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }
 
