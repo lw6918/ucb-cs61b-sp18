@@ -41,7 +41,6 @@ public class TestComplexOomage {
     @Test
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new LinkedList<>();
-        LinkedList<Integer> param1 = new LinkedList<>();
         for (int i = 0; i < 25; i++) {
             LinkedList<Integer> tmp = new LinkedList<>();
             tmp.add(i);
