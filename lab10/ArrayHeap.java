@@ -109,7 +109,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
 
         /** TODO: Your code here. */
         int parentI = parentIndex(index);
-        if (index != 1 || min(index, parentI) == index) {
+        if (index != 1 && min(index, parentI) == index) {
             swap(index, parentI);
             swim(parentI);
         }
